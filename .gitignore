@@ -11,6 +11,7 @@ acme.json
 *.db
 *.db-shm
 *.db-wal
+cf_api_token.txt
 
 
 # Temporary files
