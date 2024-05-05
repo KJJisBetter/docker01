@@ -1,6 +1,10 @@
+# General data directory
+data/
+
 # Specific service data directories
 uptime-kuma/data/
 pihole-unbound/etc_pihole*
+!traefik/data/
 
 # Sensitive files
 acme.json
