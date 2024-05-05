@@ -1,1 +1,66 @@
-test data
+http:
+ #region routers 
+  routers:
+    proxmox:
+      entryPoints:
+        - "https"
+      rule: "Host(`proxmox.local.animoserver.live`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+        - default-whitelist
+      tls: {}
+      service: proxmox
+    pihole:
+      entryPoints:
+        - "https"
+      rule: "Host(`pihole.local.animoserver.live`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+        - default-whitelist
+      tls: {}
+      service: pihole
+  
+#endregion
+#region services
+  services:
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.200:8006"
+        passHostHeader: true
+    pihole:
+      loadbalancer:
+        servers:
+          - url: "http://192.168.1.201:81"    
+#endregion
+  middlewares:
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https
+        permanent: true
+    default-headers:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    default-whitelist:
+      ipAllowList:
+        sourceRange:
+        - "192.168.1.0/24"
+        - "172.23.0.0/12"
+
+    secured:
+      chain:
+        middlewares:
+        - default-whitelist
+        - default-headers
