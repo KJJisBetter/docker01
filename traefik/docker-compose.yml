@@ -9,6 +9,7 @@ services:
       - no-new-privileges:true
     networks:
       - proxy
+      - proxy-external
     ports:
       - 80:80
       - 443:443/tcp
@@ -41,6 +42,8 @@ services:
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.animoserver.live"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.animoserver.live"
+      - "traefik.http.routers.traefik-secure.tls.domains[1].main=animoserver.live"
+      - "traefik.http.routers.traefik-secure.tls.domains[1].sans=*.animoserver.live"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
 secrets:
@@ -49,4 +52,6 @@ secrets:
 
 networks:
   proxy:
+    external: true
+  proxy-external:
     external: true

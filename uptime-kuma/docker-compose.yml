@@ -3,17 +3,18 @@ services:
     container_name: uptime-kuma
     image: louislam/uptime-kuma:1
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/app/data
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.local.animoserver.live`)"
-      - "traefik.http.routers.uptime-kuma.entrypoints=web"
+      - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.animoserver.live`)"
+      - "traefik.http.routers.uptime-kuma.entrypoints=https"
       - "traefik.http.routers.uptime-kuma.tls=true"
       - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
     restart: unless-stopped
     networks:
-      - proxy
+      - proxy-external
 
 networks:
-  proxy:
+  proxy-external:
     external: true

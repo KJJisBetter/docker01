@@ -21,7 +21,31 @@ http:
         - default-whitelist
       tls: {}
       service: pihole
-  
+    amp:
+      entryPoints:
+        - "https"
+      rule: "Host(`amp.animoserver.live`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: amp
+    portainer-ms:
+      entryPoints:
+        - "https"
+      rule: "Host(`portainer-ms.animoserver.live`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: portainer-ms 
+    minio:
+      entryPoints:
+        - "https"
+      rule: "Host(`minio.local.animoserver.live`)"    
+      middlewares:
+        - secured
+      tls: {}
+      service: minio
+
 #endregion
 #region services
   services:
@@ -33,7 +57,23 @@ http:
     pihole:
       loadbalancer:
         servers:
-          - url: "http://192.168.1.201:81"    
+          - url: "http://192.168.1.201:81" 
+        passHostHeader: true
+    amp:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.131:8080" # Replace with your actual internal IP and port
+        passHostHeader: true
+    portainer-ms:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.168:9443" # Replace with your actual internal IP and port
+        passHostHeader: true  
+    minio:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.109:9001" # Replace with your actual internal IP and port
+        passHostHeader: true       
 #endregion
   middlewares:
     https-redirectscheme:
