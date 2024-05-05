@@ -1,0 +1,20 @@
+version: '3.0'
+
+services:
+  pihole:
+    container_name: pihole
+    image: cbcrowe/pihole-unbound:latest
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - 81:80/tcp #Allows use of different port to access pihole web interface when other docker containers use port 80
+      - 5335:5335/tcp # Uncomment to enable unbound access on local server
+      # - 22/tcp # Uncomment to enable SSH
+    environment:
+      - TZ=America/New_York
+      - WEBPASSWORD=Jeremias0088-
+      - PIHOLE_WEBPORT=81
+    volumes:
+      - /home/animo/docker-data/pihole-unbound/etc_pihole-unbound:/etc/pihole:rw
+      - /home/animo/docker-data/pihole-unbound/etc_pihole_dnsmasq-unbound:/etc/dnsmasq.d:rw
+    restart: unless-stopped

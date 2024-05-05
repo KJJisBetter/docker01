@@ -1,0 +1,14 @@
+# Specific service data directories
+uptime-kuma/data/
+pihole-unbound/etc_pihole*
+
+# Sensitive files
+acme.json
+*.db
+*.db-shm
+*.db-wal
+
+
+# Temporary files
+*.tmp
+*.log
