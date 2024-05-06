@@ -1,0 +1,29 @@
+---
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homepage.rule=Host(`homepage.local.animoserver.live`)"
+      - "traefik.http.routers.homepage.entrypoints=https"
+      - "traefik.http.routers.homepage.tls=true"
+      - "traefik.http.services.homepage.loadbalancer.server.port=3000"
+    volumes:
+      - ./data/config:/app/config # Make sure your local config directory exists
+      - ./data/images:/app/public/images
+      - ./data/icons:/app/public/icons
+      - /var/run/docker.sock:/var/run/docker.sock:ro # (optional) For docker integrations
+      - /home/animo/certs/docker-ms/ca.pem:/app/config/docker-tls/192.168.1.168/ca.pem
+      - /home/animo/certs/docker-ms/cert.pem:/app/config/docker-tls/192.168.1.168/cert.pem
+      - /home/animo/certs/docker-ms/key.pem:/app/config/docker-tls/192.168.1.168/key.pem
+    environment:
+      - HOMEPAGE_VAR_TRAEFIK_USERNAME=$HOMEPAGE_VAR_TRAEFIK_USERNAME
+      - HOMEPAGE_VAR_TRAEFIK_PASSWORD=$HOMEPAGE_VAR_TRAEFIK_PASSWORD
+    networks:
+      - proxy
+
+
+networks:
+  proxy:
+    external: true

@@ -5,12 +5,17 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/app/data
+      - /home/animo/certs/docker-ms/ca.pem:/app/data/docker-tls/192.168.1.168/ca.pem
+      - /home/animo/certs/docker-ms/cert.pem:/app/data/docker-tls/192.168.1.168/cert.pem
+      - /home/animo/certs/docker-ms/key.pem:/app/data/docker-tls/192.168.1.168/key.pem
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.uptime-kuma.rule=Host(`uptime.animoserver.live`)"
       - "traefik.http.routers.uptime-kuma.entrypoints=https"
       - "traefik.http.routers.uptime-kuma.tls=true"
       - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+    environment:
+      - DOCKER_TLS_DIR_PATH
     restart: unless-stopped
     networks:
       - proxy-external

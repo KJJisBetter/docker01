@@ -5,6 +5,7 @@ data/
 uptime-kuma/data/
 pihole-unbound/etc_pihole*
 !traefik/data/
+!homepage/data
 
 # Sensitive files
 acme.json
@@ -12,6 +13,7 @@ acme.json
 *.db-shm
 *.db-wal
 cf_api_token.txt
+.env
 
 
 # Temporary files

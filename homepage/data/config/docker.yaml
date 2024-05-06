@@ -1,0 +1,14 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/latest/configs/docker/
+
+mediaserver-docker:
+   host: 192.168.1.168
+   port: 2376
+   tls:
+    keyFile: /docker-tls/192.168.1.168/key.pem
+    caFile: /docker-tls/192.168.1.168/ca.pem
+    certFile: /docker-tls/192.168.1.168/cert.pem
+
+my-docker01:
+   socket: /var/run/docker.sock
