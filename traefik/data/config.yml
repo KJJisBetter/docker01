@@ -45,6 +45,14 @@ http:
         - secured
       tls: {}
       service: minio
+    overseerr:
+      entryPoints:
+        - "https"
+      rule: "Host(`overseerr.animoserver.live`)"    
+      middlewares:
+        - default-headers
+      tls: {}
+      service: overseerr  
 
 #endregion
 #region services
@@ -73,7 +81,12 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.1.109:9001" # Replace with your actual internal IP and port
-        passHostHeader: true       
+        passHostHeader: true
+    overseerr:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.168:5055" # Replace with your actual internal IP and port
+        passHostHeader: true
 #endregion
   middlewares:
     https-redirectscheme:
