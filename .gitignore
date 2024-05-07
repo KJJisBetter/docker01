@@ -4,8 +4,10 @@ data/
 # Specific service data directories
 uptime-kuma/data/
 pihole-unbound/etc_pihole*
+homepage/data/config/docker-tls
 !traefik/data/
-!homepage/data
+!homepage/data/
+
 
 # Sensitive files
 acme.json
