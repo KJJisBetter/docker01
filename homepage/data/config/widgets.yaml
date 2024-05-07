@@ -2,11 +2,32 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/service-widgets
 
-- resources:
-    cpu: true
-    memory: true
-    disk: /
+- glances:
+    url: http://192.168.1.200:61208/
+    cpu: true # optional, enabled by default, disable by setting to false
+    mem: true # optional, enabled by default, disable by setting to false
+    cputemp: true # disabled by default
+    uptime: true # disabled by default
+    disk: / # disabled by default, use mount point of disk(s) in glances. Can also be a list (see below)
+    diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
+    expanded: true # show the expanded view
+    label: Proxmox Susano # optional
 
-- search:
-    provider: google
-    target: _blank
+- datetime:
+    format:
+       dateStyle: short
+       timeStyle: short
+       hour12: true
+
+- glances:
+    url: http://192.168.1.195:61208/
+    cpu: true # optional, enabled by default, disable by setting to false
+    mem: true # optional, enabled by default, disable by setting to false
+    cputemp: true # disabled by default
+    uptime: true # disabled by default
+    disk: / # disabled by default, use mount point of disk(s) in glances. Can also be a list (see below)
+    diskUnits: bytes # optional, bytes (default) or bbytes. Only applies to disk
+    expanded: true # show the expanded view
+    label: Proxmox Beerus # optional    
+
+  
