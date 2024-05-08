@@ -2,20 +2,30 @@
 # For configuration options and examples, please see:
 # https://gethomepage.dev/latest/configs/services
 
-- Media Server:
-    - Plex:
-        icon: plex.png
-        href: http://192.168.1.168:32400/
-        server: mediaserver-docker
-        container: plexms
-    - Radarr:
-        icon: radarr.png
-        href: http://192.168.1.168:7878/
-        server: mediaserver-docker
-        container: radarr
+- Infrastructure:
+    - Susano:
+        icon: proxmox.png
+        href: https://192.168.1.200:8006
+        ping: 192.168.1.200:8006
+        widget:
+            type: proxmox
+            url: https://192.168.1.200:8006
+            username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
+            password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
+            node: susano
 
+    - Beerus:
+        icon: proxmox.png
+        href: https://192.168.1.195:8006
+        ping: 192.168.1.195:8006
+        widget:
+            type: proxmox
+            url: https://192.168.1.195:8006
+            username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
+            password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
+            node: beerus
 
-- Docker:
+- Network:
     - Traefik:
         icon: traefik.png
         href: https://traefik-dashboard.local.animoserver.live/
@@ -26,8 +36,78 @@
             url: https://traefik-dashboard.local.animoserver.live
             username: {{HOMEPAGE_VAR_TRAEFIK_USERNAME}} # optional
             password: {{HOMEPAGE_VAR_TRAEFIK_PASSWORD}} # optional
+    - PiHole:
+        icon: pi-hole.png
+        href: https://pihole.local.animoserver.live
+        server: my-docker01
+        container: pihole
+        widget:
+            type: pihole
+            url: https://pihole.local.animoserver.live
+            key: 3ab58a07059c9a2c71a3749b9173526872519685b72a0f26634bb96af7995e63 # optional
+            fields: ["queries", "blocked"]
+    - Gluetun:
+        icon: gluetun.png
+        server: mediaserver-docker
+        container: gluetun
+        widget:
+            type: gluetun
+            url: http://192.168.1.168:8000
+            fields: ["region", "country"]
+    - Uptime Kuma Chaos Minecraft:
+        icon: uptime-kuma.png
+        href: https://uptime.animoserver.live/status/minecraft
+        server: my-docker01
+        container: uptime-kuma
+        widget:
+            type: uptimekuma
+            url: https://uptime.animoserver.live
+            slug: minecraft
 
-- My Third Group:
-    - My Third Service:
-        href: http://localhost/
-        description: Homepage is 😎
+- Media Server:
+    - Portainer:
+        icon: portainer.png
+        href: https://portainer-ms.animoserver.live
+        server: mediaserver-docker
+        container: portainer
+        widget:
+            type: portainer
+            url: https://192.168.1.168:9443
+            env: 2
+            key: ptr_c7VfXny8nOBTHLFqI6kNXlNnOFyLj0BCfXZgxvfW5zA=
+    - Plex:
+        icon: plex.png
+        href: http://192.168.1.168:32400
+        server: mediaserver-docker
+        container: plexms
+        widget:
+            type: plex
+            url: http://192.168.1.168:32400
+            key: Z9Zz_1wfgbu6z7gdVVbq # see https://www.plexopedia.com/plex-media-server/general/plex-token/
+            fields: ["movies", "tv"]
+    - GTX 1650 SUPER:
+        widget:
+            type: glances
+            url: http://192.168.1.168:61208/
+            metric: gpu:0                
+    - Tautulli:
+        icon: tautulli.png
+        href: http://192.168.1.168:8181
+        server: mediaserver-docker
+        container: tautulli
+        widget:
+            type: tautulli
+            url: http://192.168.1.168:8181
+            key: 69ace616034c47d6bf9103f4610e24ed
+            enableUser: true # optional, defaults to false
+            showEpisodeNumber: true # optional, defaults to false
+            expandOneStreamToTwoRows: false # optional, defaults to true
+
+- Game Servers:
+    - Chaos ATM9:
+        icon: https://media.forgecdn.net/avatars/902/338/638350403793040080.png
+        widget:
+            type: gamedig
+            serverType: minecraft # see https://github.com/gamedig/node-gamedig#games-list
+            url: tcp://192.168.1.133:25568
+            fields: ["status", "name", "currentPlayers","ping"]
