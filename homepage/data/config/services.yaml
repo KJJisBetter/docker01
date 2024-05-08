@@ -24,6 +24,24 @@
             username: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_ID}}
             password: {{HOMEPAGE_VAR_PROXMOX_API_TOKEN_SECRET}}
             node: beerus
+    - Portainer MediaServer:
+        icon: portainer.png
+        href: https://portainer-ms.animoserver.live
+        server: mediaserver-docker
+        container: portainer
+        widget:
+            type: portainer
+            url: https://192.168.1.168:9443
+            env: 2
+            key: ptr_c7VfXny8nOBTHLFqI6kNXlNnOFyLj0BCfXZgxvfW5zA=            
+    - Watchtower:
+        icon: watchtower.png
+        server: my-docker01
+        container: watchtower
+        widget:
+            type: watchtower
+            url: http://192.168.1.201:8080
+            key: wathdaksncjpkawopsfgasd
 
 - Network:
     - Traefik:
@@ -65,16 +83,6 @@
             slug: minecraft
 
 - Media Server:
-    - Portainer:
-        icon: portainer.png
-        href: https://portainer-ms.animoserver.live
-        server: mediaserver-docker
-        container: portainer
-        widget:
-            type: portainer
-            url: https://192.168.1.168:9443
-            env: 2
-            key: ptr_c7VfXny8nOBTHLFqI6kNXlNnOFyLj0BCfXZgxvfW5zA=
     - Plex:
         icon: plex.png
         href: http://192.168.1.168:32400
@@ -89,7 +97,17 @@
         widget:
             type: glances
             url: http://192.168.1.168:61208/
-            metric: gpu:0                
+            metric: gpu:0
+    - Qbittorrent:
+        icon: qbittorrent.png
+        href: http://192.168.1.168:8080
+        server: mediaserver-docker
+        container: qbittorrent
+        widget:
+             type: qbittorrent
+             url: http://192.168.1.168:8080
+             username: animo
+             password: Jeremias0088-                         
     - Tautulli:
         icon: tautulli.png
         href: http://192.168.1.168:8181
@@ -102,6 +120,64 @@
             enableUser: true # optional, defaults to false
             showEpisodeNumber: true # optional, defaults to false
             expandOneStreamToTwoRows: false # optional, defaults to true
+    - Jackett Show&Movies:
+        icon: jackett.png
+        href: http://192.168.1.168:9117
+        server: mediaserver-docker
+        container: jackett
+        widget:
+            type: jackett
+            url: http://192.168.1.168:9117
+            password: Jeremias0088- # optional             
+    - Radarr Movies:
+        icon: radarr.png
+        href: http://192.168.1.168:7878
+        server: mediaserver-docker
+        container: radarr
+        widget:
+            type: radarr
+            url: http://192.168.1.168:7878
+            key: 3710bd1d64d14e828091f5f186e44e02
+            enableQueue: true # optional, defaults to false
+    - Sonarr Shows:
+        icon: sonarr.png
+        href: http://192.168.1.168:8989
+        server: mediaserver-docker
+        container: sonarr
+        widget:
+            type: sonarr
+            url: http://192.168.1.168:8989
+            key: f1d002a47206488a80333794657a3bd9
+            enableQueue: true # optional, defaults to false
+    - Jackett Anime:
+        icon: jackett.png
+        href: http://192.168.1.168:9127
+        server: mediaserver-docker
+        container: jackett_anime
+        widget:
+            type: jackett
+            url: http://192.168.1.168:9127
+            password: Jeremias0088- # optional      
+    - Radarr Anime:
+        icon: radarr.png
+        href: http://192.168.1.168:7979
+        server: mediaserver-docker
+        container: radarr_anime
+        widget:
+            type: radarr
+            url: http://192.168.1.168:7979
+            key: e45a72cbea10463e9c40936d4b12fac3
+            enableQueue: true # optional, defaults to false            
+    - Sonarr Anime:
+        icon: sonarr.png
+        href: http://192.168.1.168:9999
+        server: mediaserver-docker
+        container: sonarr_anime
+        widget:
+            type: sonarr
+            url: http://192.168.1.168:9999
+            key: f384740e58af4a5dba3300c57adcd0b2
+            enableQueue: true # optional, defaults to false
 
 - Game Servers:
     - Chaos ATM9:
