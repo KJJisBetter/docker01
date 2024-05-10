@@ -33,7 +33,7 @@
             type: portainer
             url: https://192.168.1.168:9443
             env: 2
-            key: ptr_c7VfXny8nOBTHLFqI6kNXlNnOFyLj0BCfXZgxvfW5zA=            
+            key: {{HOMEPAGE_VAR_API_PORTAINER_MEDIASERVER}}            
     - Watchtower:
         icon: watchtower.png
         server: my-docker01
@@ -41,7 +41,7 @@
         widget:
             type: watchtower
             url: http://192.168.1.201:8080
-            key: wathdaksncjpkawopsfgasd
+            key: {{HOMEPAGE_VAR_API_WATCHTOWER}}
 
 - Network:
     - Traefik:
@@ -52,8 +52,8 @@
         widget:
             type: traefik
             url: https://traefik-dashboard.local.animoserver.live
-            username: {{HOMEPAGE_VAR_TRAEFIK_USERNAME}} # optional
-            password: {{HOMEPAGE_VAR_TRAEFIK_PASSWORD}} # optional
+            username: {{HOMEPAGE_VAR_USERNAME}} # optional
+            password: {{HOMEPAGE_VAR_PASSWORD}} # optional
     - PiHole:
         icon: pi-hole.png
         href: https://pihole.local.animoserver.live
@@ -62,7 +62,7 @@
         widget:
             type: pihole
             url: https://pihole.local.animoserver.live
-            key: 3ab58a07059c9a2c71a3749b9173526872519685b72a0f26634bb96af7995e63 # optional
+            key: {{HOMEPAGE_VAR_API_PIHOLE}} # optional
             fields: ["queries", "blocked"]
     - Gluetun:
         icon: gluetun.png
@@ -91,7 +91,7 @@
         widget:
             type: plex
             url: http://192.168.1.168:32400
-            key: Z9Zz_1wfgbu6z7gdVVbq # see https://www.plexopedia.com/plex-media-server/general/plex-token/
+            key: {{HOMEPAGE_VAR_API_PLEX}} # see https://www.plexopedia.com/plex-media-server/general/plex-token/
             fields: ["movies", "tv"]
     - GTX 1650 SUPER:
         widget:
@@ -106,8 +106,8 @@
         widget:
              type: qbittorrent
              url: http://192.168.1.168:8080
-             username: animo
-             password: Jeremias0088-                         
+             username: {{HOMEPAGE_VAR_USERNAME}}
+             password: {{HOMEPAGE_VAR_PASSWORD}}               
     - Tautulli:
         icon: tautulli.png
         href: http://192.168.1.168:8181
@@ -116,7 +116,7 @@
         widget:
             type: tautulli
             url: http://192.168.1.168:8181
-            key: 69ace616034c47d6bf9103f4610e24ed
+            key: {{HOMEPAGE_VAR_API_TAUTULLI}}
             enableUser: true # optional, defaults to false
             showEpisodeNumber: true # optional, defaults to false
             expandOneStreamToTwoRows: false # optional, defaults to true
@@ -128,7 +128,7 @@
         widget:
             type: jackett
             url: http://192.168.1.168:9117
-            password: Jeremias0088- # optional             
+            password: {{HOMEPAGE_VAR_PASSWORD}} # optional             
     - Radarr Movies:
         icon: radarr.png
         href: http://192.168.1.168:7878
@@ -137,7 +137,7 @@
         widget:
             type: radarr
             url: http://192.168.1.168:7878
-            key: 3710bd1d64d14e828091f5f186e44e02
+            key: {{HOMEPAGE_VAR_API_RADARR}}
             enableQueue: true # optional, defaults to false
     - Sonarr Shows:
         icon: sonarr.png
@@ -147,7 +147,7 @@
         widget:
             type: sonarr
             url: http://192.168.1.168:8989
-            key: f1d002a47206488a80333794657a3bd9
+            key: {{HOMEPAGE_VAR_API_SONARR}}
             enableQueue: true # optional, defaults to false
     - Jackett Anime:
         icon: jackett.png
@@ -157,7 +157,7 @@
         widget:
             type: jackett
             url: http://192.168.1.168:9127
-            password: Jeremias0088- # optional      
+            password: {{HOMEPAGE_VAR_PASSWORD}} # optional      
     - Radarr Anime:
         icon: radarr.png
         href: http://192.168.1.168:7979
@@ -166,7 +166,7 @@
         widget:
             type: radarr
             url: http://192.168.1.168:7979
-            key: e45a72cbea10463e9c40936d4b12fac3
+            key: {{HOMEPAGE_VAR_API_RADARR_ANIME}}
             enableQueue: true # optional, defaults to false            
     - Sonarr Anime:
         icon: sonarr.png
@@ -176,7 +176,7 @@
         widget:
             type: sonarr
             url: http://192.168.1.168:9999
-            key: f384740e58af4a5dba3300c57adcd0b2
+            key: {{HOMEPAGE_VAR_API_SONARR_ANIME}}
             enableQueue: true # optional, defaults to false
 
 - Game Servers:
