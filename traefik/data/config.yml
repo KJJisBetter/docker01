@@ -53,7 +53,14 @@ http:
         - default-headers
       tls: {}
       service: overseerr  
-
+    nextcloud:
+      rule: "Host(`cloud.animoserver.live`)"
+      entrypoints:
+        - "https"
+      middlewares:
+        - nextcloud-chain
+      tls: {}
+      service: nextcloud
 #endregion
 #region services
   services:
@@ -87,6 +94,11 @@ http:
         servers:
           - url: "http://192.168.1.168:5055" # Replace with your actual internal IP and port
         passHostHeader: true
+    nextcloud:
+      loadbalancer:
+        servers:
+          - url: "http://192.168.1.201:11000"    
+          
 #endregion
   middlewares:
     https-redirectscheme:
@@ -117,3 +129,15 @@ http:
         middlewares:
         - default-whitelist
         - default-headers
+    
+    nextcloud-secure-headers:
+      headers:
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+        referrerPolicy: "same-origin"     
+    nextcloud-chain:
+      chain:
+        middlewares:
+          # - ... (e.g. rate limiting middleware)
+          - https-redirectscheme
+          - nextcloud-secure-headers    

@@ -56,12 +56,12 @@
             password: {{HOMEPAGE_VAR_PASSWORD}} # optional
     - PiHole:
         icon: pi-hole.png
-        href: https://pihole.local.animoserver.live
+        href: https://pihole.local.animoserver.live/admin
         server: my-docker01
         container: pihole
         widget:
             type: pihole
-            url: https://pihole.local.animoserver.live
+            url: http://192.168.1.201:81
             key: {{HOMEPAGE_VAR_API_PIHOLE}} # optional
             fields: ["queries", "blocked"]
     - Gluetun:
