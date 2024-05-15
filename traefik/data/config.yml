@@ -61,6 +61,16 @@ http:
         - nextcloud-chain
       tls: {}
       service: nextcloud
+    code-server:
+      entryPoints:
+        - "https"
+      rule: "Host(`code.local.animoserver.live`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+        - default-whitelist
+      tls: {}
+      service: code-server  
 #endregion
 #region services
   services:
@@ -97,7 +107,12 @@ http:
     nextcloud:
       loadbalancer:
         servers:
-          - url: "http://192.168.1.201:11000"    
+          - url: "http://192.168.1.201:11000"
+    code-server:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.201:8282"
+        passHostHeader: true          
           
 #endregion
   middlewares:
