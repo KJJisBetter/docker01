@@ -1,5 +1,5 @@
 http:
- #region routers 
+ #region routers
   routers:
     proxmox:
       entryPoints:
@@ -27,6 +27,7 @@ http:
       rule: "Host(`amp.animoserver.live`)"
       middlewares:
         - default-headers
+        - https-redirectscheme
       tls: {}
       service: amp
     portainer-ms:
@@ -36,11 +37,11 @@ http:
       middlewares:
         - default-headers
       tls: {}
-      service: portainer-ms 
+      service: portainer-ms
     minio:
       entryPoints:
         - "https"
-      rule: "Host(`minio.local.animoserver.live`)"    
+      rule: "Host(`minio.local.animoserver.live`)"
       middlewares:
         - secured
       tls: {}
@@ -48,11 +49,11 @@ http:
     overseerr:
       entryPoints:
         - "https"
-      rule: "Host(`overseerr.animoserver.live`)"    
+      rule: "Host(`overseerr.animoserver.live`)"
       middlewares:
         - default-headers
       tls: {}
-      service: overseerr  
+      service: overseerr
     nextcloud:
       rule: "Host(`cloud.animoserver.live`)"
       entrypoints:
@@ -61,16 +62,33 @@ http:
         - nextcloud-chain
       tls: {}
       service: nextcloud
-    code-server:
+    coder:
       entryPoints:
         - "https"
-      rule: "Host(`code.local.animoserver.live`)"
+      rule: "Host(`dev.animoserver.live`) || HostRegexp(`[a-z0-9-].dev.animoserver.live`)"
+      middlewares:
+        - https-redirectscheme
+        - default-headers
+        - compress
+      tls:
+        certResolver: cloudflare
+      service: coder
+    btwebAPP:
+      entryPoints:
+        - "https"
+      rule: "Host(`btracking.animoserver.live`)"
       middlewares:
         - default-headers
-        - https-redirectscheme
-        - default-whitelist
       tls: {}
-      service: code-server  
+      service: btwebApp
+    # teleport:
+    #   entryPoints:
+    #     -"https"
+    #   rule: "Host(`teleport.animoserver.live`) || HostRegexp(`[a-z0-9-].teleport.animoserver.live`)"
+    #   middlewares:
+    #     - default-headers
+    #   tls: {}
+    #   service: teleport
 #endregion
 #region services
   services:
@@ -82,7 +100,7 @@ http:
     pihole:
       loadbalancer:
         servers:
-          - url: "http://192.168.1.201:81" 
+          - url: "http://192.168.1.201:81"
         passHostHeader: true
     amp:
       loadBalancer:
@@ -93,7 +111,7 @@ http:
       loadBalancer:
         servers:
           - url: "https://192.168.1.168:9443" # Replace with your actual internal IP and port
-        passHostHeader: true  
+        passHostHeader: true
     minio:
       loadBalancer:
         servers:
@@ -108,18 +126,32 @@ http:
       loadbalancer:
         servers:
           - url: "http://192.168.1.201:11000"
-    code-server:
+    btwebApp:
       loadBalancer:
         servers:
-          - url: "http://192.168.1.201:8282"
-        passHostHeader: true          
-          
+          - url: "http://192.168.1.201:5000/"
+        passHostHeader: true
+    coder:
+      loadBalancer:
+        servers:
+          - url: "http://54.177.207.245:3000"  # Replace with the actual IP of your Coder VM and the port Coder is running on
+        passHostHeader: true
+    # teleport:
+    #   loadBalancer:
+    #     servers:
+    #       - url: "http://192.168.1.232:3080"
+    #     passHostHeader: true
+
 #endregion
   middlewares:
+    compress:
+      compress: {}
+
     https-redirectscheme:
       redirectScheme:
         scheme: https
         permanent: true
+
     default-headers:
       headers:
         frameDeny: true
@@ -144,15 +176,15 @@ http:
         middlewares:
         - default-whitelist
         - default-headers
-    
+
     nextcloud-secure-headers:
       headers:
         hostsProxyHeaders:
           - "X-Forwarded-Host"
-        referrerPolicy: "same-origin"     
+        referrerPolicy: "same-origin"
     nextcloud-chain:
       chain:
         middlewares:
           # - ... (e.g. rate limiting middleware)
           - https-redirectscheme
-          - nextcloud-secure-headers    
+          - nextcloud-secure-headers

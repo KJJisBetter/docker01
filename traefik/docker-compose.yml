@@ -1,4 +1,4 @@
-version: "3.8"
+---
 
 services:
   traefik:
@@ -44,6 +44,10 @@ services:
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.animoserver.live"
       - "traefik.http.routers.traefik-secure.tls.domains[1].main=animoserver.live"
       - "traefik.http.routers.traefik-secure.tls.domains[1].sans=*.animoserver.live"
+      - "traefik.http.routers.traefik-secure.tls.domains[2].main=dev.animoserver.live"
+      - "traefik.http.routers.traefik-secure.tls.domains[2].sans=*.dev.animoserver.live"
+      # - "traefik.http.routers.traefik-secure.tls.domains[3].main=teleport.animoserver.live"
+      # - "traefik.http.routers.traefik-secure.tls.domains[3].sans=*.teleport.animoserver.live"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
 secrets:
